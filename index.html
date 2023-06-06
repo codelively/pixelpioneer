@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+<head>
+	<title>PixelPioneer Ressources</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
+
+<body class="is-preload">
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<div class="inner">
+
+				<!-- Logo -->
+				<a href="index.html" class="logo">
+					<span class="symbol"><img src="images/logo.svg" alt="" /></span><span
+						class="title">PixelPioneer</span>
+				</a>
+
+				<!-- Nav -->
+				<nav>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+					</ul>
+				</nav>
+
+			</div>
+		</header>
+
+		<!-- Menu -->
+		<nav id="menu">
+			<h2>Menu</h2>
+			<ul>
+				<li><a href="index.html">Home</a></li>
+				<li><a href="license.html">License</a></li>
+				<li><a href="api.html">API</a></li>
+				<li><a href="https://github.com/codelively/pixelpioneer">GitHub</a></li>
+				<li><a href="mailto:codelivelyproject@gmail.com">Contact</a></li>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<div id="main">
+			<div class="inner">
+				<header>
+					<h1>This is PixelPioneer, a free, no copyright <br />image database by <a
+							href="http://codelively.github.io">CodeLively</a>.</h1>
+					<p>We provide you with free images, which you can use anywhere, even commercially. All images on
+						this website are published under our <a href="license.html">license</a>. Below you can download
+						all images, which are sorted by their publication date!</p>
+				</header>
+				<section class="tiles" id="images">
+				</section>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<div class="inner">
+				<section>
+					<h2>Follow</h2>
+					<ul class="icons">
+						<li><a href="https://www.instagram.com/pixelpioneer.project/" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a>
+						</li>
+						<li><a href="https://github.com/codelively/pixelpioneer" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+						<li><a href="mailto:codelivelyproject@gmail.com" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+				</section>
+				<ul class="copyright">
+					<li>&copy; CodeLively. All rights reserved</li>
+					<li>License: <a href="./license.html">Read here</a></li>
+				</ul>
+			</div>
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/browser.min.js"></script>
+	<script src="assets/js/breakpoints.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
+	<script>
+		// URL zur JSON-Datei
+		const url = 'https://codelively.github.io/pixelpioneer/posts/images.json';
+
+		// Funktion zum Abrufen der Daten
+		async function fetchImageData() {
+			try {
+				// Daten von der URL abrufen
+				const response = await fetch(url);
+				const data = await response.json();
+				console.log("Fetching Images by API")
+				console.log(data)
+				for (i in data) {
+					let imageLink = data[i].url + "/" +  data[i].images[0]
+					document.getElementById("images").innerHTML += '<article class="style' + (parseInt(i)+1) + '"><span class="image"><img src="' + imageLink + '" alt="" /></span><a href="getImage.html?date=' + data[i].date + '"><h2>' + data[i].title + '</h2><div class="content"><p>Posted on ' + data[i].date + '</p></div></a></article > '
+				}
+			} catch (error) {
+				console.log('Fehler beim Abrufen der Daten:', error);
+			}
+		}
+
+		// Funktion aufrufen
+		fetchImageData();
+
+
+	</script>
+
+</body>
+
+</html>

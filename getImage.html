@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>PixelPioneer - Image Database</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<div class="inner">
+
+							<!-- Logo -->
+								<a href="index.html" class="logo">
+									<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">PixelPioneer</span>
+								</a>
+
+						</div>
+					</header>
+
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+							<h1 id="imageTitle">No results found</h1>
+							<div id="pageBody" class="row">
+
+							</div>
+							<p><li><a href="https://instagram.com/pixelpioneer.project" class="button primary fit" id="instaButton">Instagram</a></li></p>
+						</div>
+					</div>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<div class="inner">
+				<section>
+					<h2>Follow</h2>
+					<ul class="icons">
+						<li><a href="https://www.instagram.com/pixelpioneer.project/" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a>
+						</li>
+						<li><a href="https://github.com/codelively/pixelpioneer" class="icon brands style2 fa-github"><span class="label">GitHub</span></a></li>
+						<li><a href="mailto:codelivelyproject@gmail.com" class="icon solid style2 fa-envelope"><span class="label">Email</span></a></li>
+					</ul>
+				</section>
+				<ul class="copyright">
+					<li>&copy; CodeLively. All rights reserved</li>
+					<li>License: <a href="./license.html">Read here</a></li>
+				</ul>
+			</div>
+		</footer>
+
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+			<script>
+				const queryString = window.location.search;
+				const urlParams = new URLSearchParams(queryString);
+				const date = urlParams.get('date');
+				const url = 'https://codelively.github.io/pixelpioneer/posts/images.json';
+
+				async function fetchImageData() {
+				try {
+					const response = await fetch(url);
+					const data = await response.json();
+					console.log("Fetching Images by API");
+					console.log(data);
+					const matchingObject = data.find(obj => obj.date === date);
+					if (matchingObject) {
+					console.log("Matching Object:");
+					console.log(matchingObject);
+					document.getElementById("imageTitle").innerHTML = matchingObject.title;
+					document.getElementById("instaButton").href = matchingObject.instagram;
+					for (i in matchingObject.images) {
+						let imageUrl = matchingObject.url + "/" + matchingObject.images[i]
+						document.getElementById("pageBody").innerHTML += '<div class="col-4"><a href="' + imageUrl + '"><span class="image fit"><img src="' + imageUrl + '" alt="" /></span></a></div>'
+					}
+					} else {
+					console.log("No results found");
+					alert("No results found")
+					}
+				} catch (error) {
+					console.log('Error: ', error);
+				}
+				}
+
+				fetchImageData();
+
+			</script>
+	</body>
+</html>
